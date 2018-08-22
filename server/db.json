@@ -1,0 +1,76 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "Chips",
+      "price": 10
+    },
+    {
+      "id": 2,
+      "title": "chocalate",
+      "price": 20
+    }
+  ],
+  "users": [
+    {
+      "name": "Ajaj Rajguru",
+      "email": "ud@vLFqpHNhkL*xL",
+      "password": "",
+      "token": "token1534578077619",
+      "id": 1
+    },
+    {
+      "name": "Ajency",
+      "email": "ajaj@ajency.in",
+      "password": "ud@vLFqpHNhkL*xL",
+      "token": "token1534579414203",
+      "id": 2
+    },
+    {
+      "name": "tanvi",
+      "email": "tanvi.s@ajency.in",
+      "password": "test123",
+      "token": "token1534598127751",
+      "id": 3
+    },
+    {
+      "name": "test1",
+      "email": "test@test.com",
+      "password": "test123",
+      "token": "token1534604128657",
+      "id": 4
+    },
+    {
+      "name": "sfdffsf",
+      "email": "sdsds@fsfdf.fdf",
+      "password": "ddsdsd",
+      "token": "token1534604621316",
+      "id": 5
+    },
+    {
+      "name": "tetete",
+      "email": "ajajrtret@ajency.in",
+      "password": "ud@vLFqpHNhkL*xL",
+      "token": "token1534604984920",
+      "id": 6
+    },
+    {
+      "name": "fdsfdfd",
+      "email": "fsdfdsfd@ajency.in",
+      "password": "ud@vLFqpHNhkL*xL",
+      "data": {
+        "token": "token1534605690856"
+      },
+      "id": 7
+    },
+    {
+      "name": "fsdfdsf",
+      "email": "fsdfdsfdsd@ajency.in",
+      "password": "ud@vLFqpHNhkL*xL",
+      "data": {
+        "token": "token1534605732633"
+      },
+      "id": 8
+    }
+  ]
+}

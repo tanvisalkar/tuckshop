@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="/ProductApp/css/Toasty/Defaults.css">
+</head>
+
+<body>
+    <div id="elm-code-is-loaded-here"></div>
+    <script src="/ProductApp/elm.js"></script>
+    <script>
+        var element = document.getElementById("elm-code-is-loaded-here");
+        var storedState = localStorage.getItem('user');
+        var startingState = storedState ? JSON.parse(storedState) : null;
+        var app = Elm.App.embed(element, startingState);
+        // var elmApp = Elm.App.fullscreen(startingState);
+        app.ports.storeUserDetails.subscribe(function(state) {
+            localStorage.setItem('user', JSON.stringify(state));
+        });
+        app.ports.removeUserDetails.subscribe(function() {
+            localStorage.removeItem('user');
+        });
+
+        app.ports.callUserLogout.subscribe(function(logoutStatus) {
+            console.log("status==" + logoutStatus)
+            app.ports.receiveLogoutData.send(logoutStatus);
+        });
+    </script>
+</body>
+
+</html>
