@@ -9,6 +9,11 @@
       "id": 2,
       "title": "chocalate",
       "price": 20
+    },
+    {
+      "title": "dfgdf",
+      "price": 0,
+      "id": 3
     }
   ],
   "users": [
@@ -71,6 +76,15 @@
         "token": "token1534605732633"
       },
       "id": 8
+    },
+    {
+      "name": "fdsfd",
+      "email": "fdsfds@fsdfs.fdsf",
+      "password": "dsdas",
+      "data": {
+        "token": "token1534943392405"
+      },
+      "id": 9
     }
   ]
 }

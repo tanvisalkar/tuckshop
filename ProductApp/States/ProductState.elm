@@ -49,10 +49,10 @@ init maybeUser location =
         ( navbarState, navbarCmd ) =
             case maybeUser of
                 Just userObj ->
-                    Navbar.initialState userObj.loggedIn
+                    Navbar.initialState userObj.loggedIn userObj.email
 
                 Nothing ->
-                    Navbar.initialState False 
+                    Navbar.initialState False ""
             
 
         user =
@@ -134,13 +134,18 @@ update msg model =
             case findProductById productId model.products of
                 Just product ->
                     ( model, deleteProductCommand product )
-                        |> addToast (Toasty.Defaults.Error (Just "Delete Product") ("Product "++product.title++" deleted successfully!!") )
+                        
 
                 Nothing ->
                     ( model, Cmd.none )
 
-        ProductDeleted _ ->
+        ProductDeleted (Ok delString) ->
             ( model, getProductsCommand )
+                |> addToast (Toasty.Defaults.Error (Just "Delete Product") ("Product deleted successfully!!") )
+
+        ProductDeleted (Err httpError) ->
+            ( model, Cmd.none )
+                |> addToast (Toasty.Defaults.Error (Just "Error") (createErrorMessage httpError) )
 
         NewProductTitle newTitle ->
             updateNewProduct newTitle setTitle model

@@ -9,13 +9,13 @@ import Components.Types.NavbarTypes exposing (..)
 
 -- The navbar needs to know the initial window size, so the inital state for a navbar requires a command to be run by the Elm runtime
 
-initialState : Bool -> ( Model, Cmd Msg )
-initialState loggedIn =
+initialState : Bool -> String -> ( Model, Cmd Msg )
+initialState loggedIn email =
     let
         ( navbarState, navbarCmd ) =
             Navbar.initialState NavbarMsg
     in
-        ( { navbarState = navbarState, loggedIn = loggedIn }, navbarCmd )
+        ( { navbarState = navbarState, loggedIn = loggedIn, email = email }, navbarCmd )
 
 setInitialState : Bool -> Model -> Model
 setInitialState loggedIn model = 
@@ -59,7 +59,8 @@ addMenus model =
 addLoginMenus : Model -> List (Navbar.CustomItem Msg)
 addLoginMenus model =
     -- Debug.log "logged=="++(toString model.loggedIn)
-    [ Navbar.textItem [] [ a [ onClick LogOut, class "nav-link", style [("cursor","pointer"),("float","right")] ] [ text "Logout" ] ]
+    [ Navbar.textItem []  [ text ("Logged in as: "++model.email) ] 
+    ,   Navbar.textItem [] [ a [ onClick LogOut, class "nav-link", style [("cursor","pointer"),("float","right")] ] [ text "Logout" ] ]
         -- Navbar.itemLink [ onClick LogOut, style [("cursor","pointer"),("float","right")] ] [ text "Logout" ]
     -- , Navbar.itemLink [ href "#" ] [ text "Item 2" ]
     ]

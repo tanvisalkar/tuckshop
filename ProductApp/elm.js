@@ -17364,9 +17364,9 @@ var _user$project$Types_UserTypes$Password = {ctor: 'Password'};
 var _user$project$Types_UserTypes$Email = {ctor: 'Email'};
 var _user$project$Types_UserTypes$Name = {ctor: 'Name'};
 
-var _user$project$Components_Types_NavbarTypes$Model = F2(
-	function (a, b) {
-		return {navbarState: a, loggedIn: b};
+var _user$project$Components_Types_NavbarTypes$Model = F3(
+	function (a, b, c) {
+		return {navbarState: a, loggedIn: b, email: c};
 	});
 var _user$project$Components_Types_NavbarTypes$LogOut = {ctor: 'LogOut'};
 var _user$project$Components_Types_NavbarTypes$NavbarMsg = function (a) {
@@ -19301,38 +19301,50 @@ var _user$project$Components_Navbar$addLoginMenus = function (model) {
 			{ctor: '[]'},
 			{
 				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$a,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Events$onClick(_user$project$Components_Types_NavbarTypes$LogOut),
-						_1: {
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('nav-link'),
-							_1: {
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$style(
-									{
-										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'},
-										_1: {
-											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'float', _1: 'right'},
-											_1: {ctor: '[]'}
-										}
-									}),
-								_1: {ctor: '[]'}
-							}
-						}
-					},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text('Logout'),
-						_1: {ctor: '[]'}
-					}),
+				_0: _elm_lang$html$Html$text(
+					A2(_elm_lang$core$Basics_ops['++'], 'Logged in as: ', model.email)),
 				_1: {ctor: '[]'}
 			}),
-		_1: {ctor: '[]'}
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_rundis$elm_bootstrap$Bootstrap_Navbar$textItem,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$a,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Events$onClick(_user$project$Components_Types_NavbarTypes$LogOut),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('nav-link'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$style(
+										{
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'float', _1: 'right'},
+												_1: {ctor: '[]'}
+											}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Logout'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}),
+			_1: {ctor: '[]'}
+		}
 	};
 };
 var _user$project$Components_Navbar$addMenus = function (model) {
@@ -19517,16 +19529,17 @@ var _user$project$Components_Navbar$setInitialState = F2(
 				model,
 				{loggedIn: loggedIn}));
 	});
-var _user$project$Components_Navbar$initialState = function (loggedIn) {
-	var _p1 = _rundis$elm_bootstrap$Bootstrap_Navbar$initialState(_user$project$Components_Types_NavbarTypes$NavbarMsg);
-	var navbarState = _p1._0;
-	var navbarCmd = _p1._1;
-	return {
-		ctor: '_Tuple2',
-		_0: {navbarState: navbarState, loggedIn: loggedIn},
-		_1: navbarCmd
-	};
-};
+var _user$project$Components_Navbar$initialState = F2(
+	function (loggedIn, email) {
+		var _p1 = _rundis$elm_bootstrap$Bootstrap_Navbar$initialState(_user$project$Components_Types_NavbarTypes$NavbarMsg);
+		var navbarState = _p1._0;
+		var navbarCmd = _p1._1;
+		return {
+			ctor: '_Tuple2',
+			_0: {navbarState: navbarState, loggedIn: loggedIn, email: email},
+			_1: navbarCmd
+		};
+	});
 
 var _user$project$View$notFoundView = A2(
 	_elm_lang$html$Html$h3,
@@ -19925,9 +19938,10 @@ var _user$project$States_ProductState$init = F2(
 		var _p2 = function () {
 			var _p3 = maybeUser;
 			if (_p3.ctor === 'Just') {
-				return _user$project$Components_Navbar$initialState(_p3._0.loggedIn);
+				var _p4 = _p3._0;
+				return A2(_user$project$Components_Navbar$initialState, _p4.loggedIn, _p4.email);
 			} else {
-				return _user$project$Components_Navbar$initialState(false);
+				return A2(_user$project$Components_Navbar$initialState, false, '');
 			}
 		}();
 		var navbarState = _p2._0;
@@ -19951,8 +19965,8 @@ var _user$project$States_ProductState$init = F2(
 	});
 var _user$project$States_ProductState$update = F2(
 	function (msg, model) {
-		var _p4 = msg;
-		switch (_p4.ctor) {
+		var _p5 = msg;
+		switch (_p5.ctor) {
 			case 'GetProducts':
 				return {
 					ctor: '_Tuple2',
@@ -19966,7 +19980,7 @@ var _user$project$States_ProductState$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{products: _p4._0}),
+						{products: _p5._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'LocationChanged':
@@ -19975,19 +19989,19 @@ var _user$project$States_ProductState$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							currentRoute: _user$project$Routing$extractRoute(_p4._0)
+							currentRoute: _user$project$Routing$extractRoute(_p5._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'UpdateTitle':
-				return A4(_user$project$States_ProductState$updateField, _p4._0, _p4._1, _user$project$States_ProductState$setTitle, model);
+				return A4(_user$project$States_ProductState$updateField, _p5._0, _p5._1, _user$project$States_ProductState$setTitle, model);
 			case 'UpdatePrice':
-				return A4(_user$project$States_ProductState$updateField, _p4._0, _p4._1, _user$project$States_ProductState$setPrice, model);
+				return A4(_user$project$States_ProductState$updateField, _p5._0, _p5._1, _user$project$States_ProductState$setPrice, model);
 			case 'SubmitUpdatedProduct':
-				var _p5 = A2(_user$project$Misc$findProductById, _p4._0, model.products);
-				if (_p5.ctor === 'Just') {
-					var _p6 = _p5._0;
-					var errorList = _user$project$States_ProductState$validateEditInput(_p6);
+				var _p6 = A2(_user$project$Misc$findProductById, _p5._0, model.products);
+				if (_p6.ctor === 'Just') {
+					var _p7 = _p6._0;
+					var errorList = _user$project$States_ProductState$validateEditInput(_p7);
 					return _elm_lang$core$Native_Utils.eq(
 						errorList,
 						{ctor: '[]'}) ? {
@@ -19997,7 +20011,7 @@ var _user$project$States_ProductState$update = F2(
 							{
 								errors: {ctor: '[]'}
 							}),
-						_1: _user$project$Apis_ProductApi$updateProductCommand(_p6)
+						_1: _user$project$Apis_ProductApi$updateProductCommand(_p7)
 					} : {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
@@ -20017,7 +20031,7 @@ var _user$project$States_ProductState$update = F2(
 					};
 				}
 			case 'ProductUpdated':
-				if (_p4._0.ctor === 'Ok') {
+				if (_p5._0.ctor === 'Ok') {
 					return A2(
 						_user$project$Misc$addToast,
 						A2(
@@ -20026,7 +20040,7 @@ var _user$project$States_ProductState$update = F2(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								'Product ',
-								A2(_elm_lang$core$Basics_ops['++'], _p4._0._0.title, ' updated successfully!!'))),
+								A2(_elm_lang$core$Basics_ops['++'], _p5._0._0.title, ' updated successfully!!'))),
 						{ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none});
 				} else {
 					return A2(
@@ -20034,36 +20048,42 @@ var _user$project$States_ProductState$update = F2(
 						A2(
 							_andrewjackman$toasty_bootstrap$Toasty_Defaults$Error,
 							_elm_lang$core$Maybe$Just('Error'),
-							_user$project$Misc$createErrorMessage(_p4._0._0)),
+							_user$project$Misc$createErrorMessage(_p5._0._0)),
 						{ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none});
 				}
 			case 'DeleteProduct':
-				var _p7 = A2(_user$project$Misc$findProductById, _p4._0, model.products);
-				if (_p7.ctor === 'Just') {
-					var _p8 = _p7._0;
+				var _p8 = A2(_user$project$Misc$findProductById, _p5._0, model.products);
+				if (_p8.ctor === 'Just') {
+					return {
+						ctor: '_Tuple2',
+						_0: model,
+						_1: _user$project$Apis_ProductApi$deleteProductCommand(_p8._0)
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			case 'ProductDeleted':
+				if (_p5._0.ctor === 'Ok') {
 					return A2(
 						_user$project$Misc$addToast,
 						A2(
 							_andrewjackman$toasty_bootstrap$Toasty_Defaults$Error,
 							_elm_lang$core$Maybe$Just('Delete Product'),
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								'Product ',
-								A2(_elm_lang$core$Basics_ops['++'], _p8.title, ' deleted successfully!!'))),
-						{
-							ctor: '_Tuple2',
-							_0: model,
-							_1: _user$project$Apis_ProductApi$deleteProductCommand(_p8)
-						});
+							'Product deleted successfully!!'),
+						{ctor: '_Tuple2', _0: model, _1: _user$project$Apis_ProductApi$getProductsCommand});
 				} else {
-					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+					return A2(
+						_user$project$Misc$addToast,
+						A2(
+							_andrewjackman$toasty_bootstrap$Toasty_Defaults$Error,
+							_elm_lang$core$Maybe$Just('Error'),
+							_user$project$Misc$createErrorMessage(_p5._0._0)),
+						{ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none});
 				}
-			case 'ProductDeleted':
-				return {ctor: '_Tuple2', _0: model, _1: _user$project$Apis_ProductApi$getProductsCommand};
 			case 'NewProductTitle':
-				return A3(_user$project$States_ProductState$updateNewProduct, _p4._0, _user$project$States_ProductState$setTitle, model);
+				return A3(_user$project$States_ProductState$updateNewProduct, _p5._0, _user$project$States_ProductState$setTitle, model);
 			case 'NewProductPrice':
-				return A3(_user$project$States_ProductState$updateNewProduct, _p4._0, _user$project$States_ProductState$setPrice, model);
+				return A3(_user$project$States_ProductState$updateNewProduct, _p5._0, _user$project$States_ProductState$setPrice, model);
 			case 'CreateNewProduct':
 				var errorList = _user$project$States_ProductState$validateInput(model);
 				return _elm_lang$core$Native_Utils.eq(
@@ -20084,8 +20104,8 @@ var _user$project$States_ProductState$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ProductCreated':
-				if (_p4._0.ctor === 'Ok') {
-					var _p9 = _p4._0._0;
+				if (_p5._0.ctor === 'Ok') {
+					var _p9 = _p5._0._0;
 					return A2(
 						_user$project$Misc$addToast,
 						A2(
@@ -20111,7 +20131,7 @@ var _user$project$States_ProductState$update = F2(
 						A2(
 							_andrewjackman$toasty_bootstrap$Toasty_Defaults$Error,
 							_elm_lang$core$Maybe$Just('Error'),
-							_user$project$Misc$createErrorMessage(_p4._0._0)),
+							_user$project$Misc$createErrorMessage(_p5._0._0)),
 						{ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none});
 				}
 			case 'UpdateNoViewCount':
@@ -20123,11 +20143,11 @@ var _user$project$States_ProductState$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'SaveName':
-				return A3(_user$project$States_ProductState$updateNewUser, _p4._0, _user$project$States_ProductState$setUserName, model);
+				return A3(_user$project$States_ProductState$updateNewUser, _p5._0, _user$project$States_ProductState$setUserName, model);
 			case 'SaveEmail':
-				return A3(_user$project$States_ProductState$updateNewUser, _p4._0, _user$project$States_ProductState$setUserEmail, model);
+				return A3(_user$project$States_ProductState$updateNewUser, _p5._0, _user$project$States_ProductState$setUserEmail, model);
 			case 'SavePassword':
-				return A3(_user$project$States_ProductState$updateNewUser, _p4._0, _user$project$States_ProductState$setUserPassword, model);
+				return A3(_user$project$States_ProductState$updateNewUser, _p5._0, _user$project$States_ProductState$setUserPassword, model);
 			case 'Signup':
 				var loggedIn = true;
 				var updatedNewUser = A2(_user$project$States_ProductState$setUserLoggedIn, loggedIn, model.user);
@@ -20164,13 +20184,13 @@ var _user$project$States_ProductState$update = F2(
 			case 'AuthError':
 				return A3(
 					_user$project$States_ProductState$updateNewUser,
-					_elm_lang$core$Basics$toString(_p4._0),
+					_elm_lang$core$Basics$toString(_p5._0),
 					_user$project$States_ProductState$setUserErrorMsg,
 					model);
 			case 'GetTokenSuccess':
-				if (_p4._0.ctor === 'Ok') {
+				if (_p5._0.ctor === 'Ok') {
 					var loggedIn = true;
-					var token = _p4._0._0;
+					var token = _p5._0._0;
 					var errorMsg = '';
 					var newUser = A2(_user$project$States_ProductState$setUserErrorMsg, errorMsg, model.user);
 					var updatedNewUser = A2(_user$project$States_ProductState$setUserToken, token, newUser);
@@ -20229,7 +20249,7 @@ var _user$project$States_ProductState$update = F2(
 					};
 				}
 			case 'NavbarMsg':
-				var _p10 = A2(_user$project$Components_Navbar$update, _p4._0, model.navbarModel);
+				var _p10 = A2(_user$project$Components_Navbar$update, _p5._0, model.navbarModel);
 				var newNavModel = _p10._0;
 				var newCmd = _p10._1;
 				return A2(
@@ -20243,7 +20263,7 @@ var _user$project$States_ProductState$update = F2(
 						_1: {ctor: '[]'}
 					});
 			case 'LogOut':
-				if (_elm_lang$core$Native_Utils.eq(_p4._0, true)) {
+				if (_elm_lang$core$Native_Utils.eq(_p5._0, true)) {
 					var updatedNewUser = A8(
 						_user$project$States_ProductState$setUserObject,
 						'',
@@ -20277,7 +20297,7 @@ var _user$project$States_ProductState$update = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			default:
-				return A4(_andrewjackman$toasty_bootstrap$Toasty$update, _user$project$Misc$toastyConfig, _user$project$Types_ProductTypes$ToastyMsg, _p4._0, model);
+				return A4(_andrewjackman$toasty_bootstrap$Toasty$update, _user$project$Misc$toastyConfig, _user$project$Types_ProductTypes$ToastyMsg, _p5._0, model);
 		}
 	});
 

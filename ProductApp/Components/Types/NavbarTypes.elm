@@ -4,7 +4,7 @@ import Bootstrap.Navbar as Navbar
 -- You need to keep track of the view state for the navbar in your model
 
 type alias Model =
-    { navbarState : Navbar.State, loggedIn : Bool  }
+    { navbarState : Navbar.State, loggedIn : Bool, email : String  }
 
 -- Define a message for the navbar
 
