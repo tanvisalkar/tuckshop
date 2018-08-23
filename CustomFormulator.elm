@@ -38,7 +38,7 @@ type alias Form =
 type alias Model =
     { nicknames : List String
     , errorMessage : Maybe String
-    , name : SubElement
+    , formElem : List SubElement
     }
 
 formval : SubElement
@@ -64,7 +64,7 @@ init : ( Model, Cmd msg )
 init =
     ( { nicknames = []
       , errorMessage = Nothing
-      , name = formval
+      , formElem = [ formval ]
       }
     , Cmd.none
     )
@@ -102,16 +102,35 @@ generateFields subElement=
                             ]
                             [] 
 
+-- takes each form input and returns list of html
+generateRoot : SubElement -> Html msg  
+generateRoot field = 
+    div []
+    [
+        label [  for "name" ]
+        [ text "Name" ]
+    ,   generateFields field
+    ]
+    
 
 -- takes each form input and returns list of html
---  generateForm : List InputField -> List (Html msg)  
+generateForm : List SubElement -> Html msg  
+generateForm lst = 
+    case lst of
+        [] ->   div [] [text "test"]
+        (x::xs) -> 
+            -- div [] [text "test"]
+            generateRoot x
+
 
 
 
 view : Model -> Html msg
 view model =
     div []
-        [text "Hello!!"]
+        [
+            generateForm model.formElem
+        ]
 
 
 main : Program Never Model msg
