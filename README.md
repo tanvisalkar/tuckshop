@@ -16,7 +16,7 @@ npm install http-server -g
 ```
 2.  Json server
 ```
-npm install json-server -g
+npm install json-server
 ```
 3.  Elm live
 ```
